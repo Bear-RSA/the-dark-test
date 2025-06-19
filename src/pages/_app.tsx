@@ -1,15 +1,41 @@
 // src/pages/_app.tsx
-import '@/styles/globals.css';
-import type { AppProps } from 'next/app';
-import { AnswersProvider } from '@/context/AnswersContext';
-import Layout from '@/components/Layout';
+import { AppProps } from 'next/app'
+import Script from 'next/script'
+import Layout from '@/components/Layout'
+import '@/styles/globals.css'
 
-export default function App({ Component, pageProps }: AppProps) {
+// Your GA4 Measurement ID
+const GA_MEASUREMENT_ID = 'G-CVTNRH920P'
+
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AnswersProvider>
+    <>
+      {/* 1) Load the gtag.js library */}
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        strategy="afterInteractive"
+      />
+
+      {/* 2) Initialize gtag */}
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+        }}
+      />
+
+      {/* 3) Wrap all pages in your Layout */}
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </AnswersProvider>
-  );
+    </>
+  )
 }
