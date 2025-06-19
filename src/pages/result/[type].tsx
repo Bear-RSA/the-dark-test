@@ -1,6 +1,7 @@
 // src/pages/result/[type].tsx
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
+import Image from 'next/image'
 import Layout from '@/components/Layout'
 import { Archetype } from '@/data/questions'
 
@@ -91,10 +92,14 @@ export default function ResultPage({ type, title, description, likelihood, image
         <div className="text-center space-y-4 max-w-xl mx-auto py-8">
           <h1 className="text-4xl font-bold">{title}</h1>
 
-          <img
+          <Image
             src={image}
             alt={title}
-            className="mx-auto mb-4 w-auto max-h-[40vh] object-contain rounded-2xl"
+            width={400}
+            height={400}
+            priority
+            className="mx-auto mb-4 object-contain rounded-2xl"
+            style={{ maxHeight: '40vh', width: 'auto' }}
           />
 
           <p className="text-base whitespace-pre-line">{description}</p>
