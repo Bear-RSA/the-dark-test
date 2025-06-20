@@ -1,4 +1,4 @@
-// src/pages/_app.tsx
+// pages/_app.tsx
 import { AppProps } from 'next/app'
 import Script from 'next/script'
 import Layout from '@/components/Layout'
@@ -11,20 +11,20 @@ const GA_MEASUREMENT_ID = 'G-CVTNRH920P'
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      {/* 1) Load the gtag.js library */}
+      {/* Load the gtag.js library */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="afterInteractive"
       />
 
-      {/* 2) Initialize gtag */}
+      {/* Initialize gtag */}
       <Script
         id="gtag-init"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+            function gtag(){dataLayer.push(arguments);}  
             gtag('js', new Date());
             gtag('config', '${GA_MEASUREMENT_ID}', {
               page_path: window.location.pathname,
@@ -33,7 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }}
       />
 
-      {/* 3) Wrap your entire app in AnswersProvider */}
+      {/* Provide global Answers context and Layout */}
       <AnswersProvider>
         <Layout>
           <Component {...pageProps} />

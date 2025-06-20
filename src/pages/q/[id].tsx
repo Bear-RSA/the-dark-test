@@ -1,6 +1,7 @@
 // src/pages/q/[id].tsx
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { GetServerSideProps } from 'next'
 import { questions, Archetype } from '@/data/questions'
 import { useAnswers } from '@/context/AnswersContext'
 import { computeArchetype } from '@/utils/computeArchetype'
@@ -65,4 +66,9 @@ export default function QuestionPage() {
       </div>
     </div>
   )
+}
+
+// This forces Next.js to render the page on every request under your _app.tsx
+export const getServerSideProps: GetServerSideProps = async () => {
+  return { props: {} }
 }
