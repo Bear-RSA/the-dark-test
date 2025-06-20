@@ -3,6 +3,7 @@ import { AppProps } from 'next/app'
 import Script from 'next/script'
 import Layout from '@/components/Layout'
 import '@/styles/globals.css'
+import { AnswersProvider } from '@/context/AnswersContext'
 
 // Your GA4 Measurement ID
 const GA_MEASUREMENT_ID = 'G-CVTNRH920P'
@@ -10,13 +11,11 @@ const GA_MEASUREMENT_ID = 'G-CVTNRH920P'
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      {/* 1) Load the gtag.js library */}
+      {/* Load Google Analytics */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="afterInteractive"
       />
-
-      {/* 2) Initialize gtag */}
       <Script
         id="gtag-init"
         strategy="afterInteractive"
@@ -32,10 +31,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }}
       />
 
-      {/* 3) Wrap all pages in your Layout */}
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {/* Provide global context and layout */}
+      <AnswersProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </AnswersProvider>
     </>
   )
 }
