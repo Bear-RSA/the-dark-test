@@ -11,11 +11,13 @@ const GA_MEASUREMENT_ID = 'G-CVTNRH920P'
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      {/* Load Google Analytics */}
+      {/* 1) Load the gtag.js library */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="afterInteractive"
       />
+
+      {/* 2) Initialize gtag */}
       <Script
         id="gtag-init"
         strategy="afterInteractive"
@@ -31,7 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }}
       />
 
-      {/* Provide global context and layout */}
+      {/* 3) Wrap your entire app in AnswersProvider */}
       <AnswersProvider>
         <Layout>
           <Component {...pageProps} />
